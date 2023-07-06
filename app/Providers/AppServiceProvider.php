@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $products =  Product::all();
+        $categories =  Category::all();
+        View::share('products', $products);//
+        View::share('categories', $categories);
     }
 }

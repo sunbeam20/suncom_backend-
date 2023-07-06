@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
+use App\Models\Product;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,13 @@ use App\Models\Category;
 |
 */
 
-
-Route::get('/{view}', [ProductController::class, 'index']);
+Route::get('/', function () {
+    return view("home");
+});
+Route::get('/Results', function () {
+    return view("results");
+});
+// Route::get('/{view}', [ProductController::class, 'index']);
 Route::get('/Product/{id}', [ProductController::class, 'show']);
 Route::get('/Login', function () {
     return view("login");
@@ -37,9 +43,9 @@ Route::get('/SellerSignup', function () {
     return view("sellerSignup");
 });
 Route::get('/SellerHome', function () {
-    $categories = Category::all();
-    return view("sellerHome", ['categories' => $categories]);
+    return view("sellerHome");
 });
-
+Route::post('/products', [ProductController::class, 'addProduct']);
+Route::get('/products', [ProductController::class, 'index']);
 
 require __DIR__.'/auth.php';

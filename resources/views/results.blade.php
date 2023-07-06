@@ -5,10 +5,12 @@
         <div class="filter-option">
             <label>Category</label>
             <div>
+                @foreach ($categories as $category)
                 <label>
                     <input type="checkbox" />
-                    category . name
+                    {{$category['name']}}
                 </label>
+                @endforeach
             </div>
         </div>
         <div class="filter-option">

@@ -44,7 +44,7 @@
         margin: 2em 10em 2em 10em;
         padding: 2em 0em 2em 2em;
         flex-direction: row;
-        background-color: bisque;
+        background-color: rgb(235, 235, 235);
     }
 
     .grid-container {

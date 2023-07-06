@@ -117,30 +117,29 @@
     </div>
 
     {{-- AddProduct  --}}
-    <form class="add-product rSide">
+    <form class="add-product rSide" action="/products" method="POST">
+        @csrf
         <h2>Add New Products</h2>
         <div>
             <label for="product-images">Product images</label>
-            <input type="file" name="images" multiple accept="image/*" />
+            <input type="file" name="images" {{--multiple accept="image/*"--}} />
         </div>
         <div>
             <label for="product-category">Product Category</label>
             <select name="mySelect">
-                @foreach($categories as $category)
-                {{$category->name}}
+                <option value="">Select a category</option>
+                @foreach ($categories as $category)
+                    <option value="option1">{{ $category->name }}</option>
                 @endforeach
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
             </select>
         </div>
         <div>
             <label for="product-name">Product name</label>
-            <input type="text" />
+            <input type="text" name="name"/>
         </div>
         <div class="details">
-            <label for="product-details">Product details</label>
-            <textarea rows="5"></textarea>
+            <label for="description">Product details</label>
+            <textarea rows="5" name="description"></textarea>
         </div>
         <div>
             <label for="product-quantity">Product Quantity</label>
@@ -152,14 +151,10 @@
         </div>
         <div>
             <label for="selling-price">Selling Price</label>
-            <input type="number" step="0.01" min="0" name="price" />
+            <input type="number" step="0.01" min="0" name="sprice" />
         </div>
         <div>
             <label for="sizes">sizes</label>
-            <input type="text" />
-        </div>
-        <div>
-            <label for="available-sizes">Available sizes</label>
             <input type="text" />
         </div>
         <div>
@@ -167,15 +162,7 @@
             <input type="text" />
         </div>
         <div>
-            <label for="available-colors">Available colors</label>
-            <input type="text" />
-        </div>
-        <div>
             <label for="weight">weight</label>
-            <input type="text" />
-        </div>
-        <div>
-            <label for="product-keywords">Product keywords</label>
             <input type="text" />
         </div>
         <button class="cancel">Cancel</button>
@@ -274,7 +261,7 @@
         </div>
         <div class="body">
             <div class="div">
-                <img class="simg" src="{{asset('images/seller.png')}}" />
+                <img class="simg" src="{{ asset('images/seller.png') }}" />
                 <label class="slabel items">My Profile</label>
                 <p class="items">user_name</p>
                 <button class="buttons" @click="toggleLists('username')">Edit</button>
@@ -287,7 +274,7 @@
                 <button class="nestedButtons">Save</button>
             </div>
             <div class="div btop">
-                <img class="simg" src="{{asset('images/phone.png')}}" />
+                <img class="simg" src="{{ asset('images/phone.png') }}" />
                 <label class="slabel items">Phone</label>
                 <p class="items">+60178841890</p>
                 <button class="buttons" @click="toggleLists('phone')">Edit</button>
@@ -300,7 +287,7 @@
                 <button class="nestedButtons">Save</button>
             </div>
             <div class="div btop">
-                <img class="simg" src="{{asset('images/email.png')}}" />
+                <img class="simg" src="{{ asset('images/email.png') }}" />
                 <label class="slabel items">Email</label>
                 <p class="items">rasulyeabari@gmail.com</p>
                 <button class="buttons" @click="toggleLists('email')">Edit</button>
@@ -313,7 +300,7 @@
                 <button class="nestedButtons">Save</button>
             </div>
             <div class="div btop">
-                <img class="simg" src="{{asset('images/lock.png')}}" />
+                <img class="simg" src="{{ asset('images/lock.png') }}" />
                 <label class="slabel items">Password</label>
                 <p class="items"></p>
                 <button class="buttons" @click="toggleLists('password')">Change</button>
@@ -512,6 +499,7 @@
     }
 
     .add-product input,
+    .add-product select,
     .add-product textarea {
         width: 60%;
         margin-left: 5em;
@@ -835,7 +823,7 @@
                 var x = document.querySelector('.myorders');
                 console.log(x);
                 x.style.display = 'flex';
-            }else if (clickedClass == 'settingsli') {
+            } else if (clickedClass == 'settingsli') {
                 var x = document.querySelector('.settings');
                 console.log(x);
                 x.style.display = 'flex';

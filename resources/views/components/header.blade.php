@@ -1,13 +1,13 @@
 <header class="sticky-header">
     <nav>
         <div class="navleft">
-            <a href="/home"><img src="{{ asset('images/logo.png') }}" alt=""></a>
+            <a href="/"><img src="{{ asset('images/logo.png') }}" alt=""></a>
             <div class="dropdown">
                 <button>Categories</button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Category 1</a>
-                    <a class="dropdown-item" href="#">Category 2</a>
-                    <a class="dropdown-item" href="#">Category 3</a>
+                    @foreach ($categories as $category)
+                    <a class="dropdown-item" href={{"Results/".$category['id']}}>{{ $category->name }}</a>
+                    @endforeach
                 </div>
             </div>
         </div>
