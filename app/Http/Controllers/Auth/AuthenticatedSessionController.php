@@ -27,8 +27,8 @@ class AuthenticatedSessionController extends Controller
             'email' => $request->email,
             'password' => $request->password,
         ];
-        if (Auth::attempt($credentials)) {
-            return redirect('home');
+        if (Auth::guard('web')->attempt($credentials)) {
+            return redirect('/');
         }
         return back();
     }
@@ -38,8 +38,15 @@ class AuthenticatedSessionController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('home');
+        return redirect('/');
     }
+    public function logoutAndRedirect()
+    {
+        Auth::logout();
+        return redirect('/SellerLogin');
+    }
+    
+    
     public function destroy(Request $request): Response
     {
         Auth::guard('web')->logout();

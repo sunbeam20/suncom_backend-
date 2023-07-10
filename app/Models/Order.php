@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ['status', 'payment_method', 'user_id'];
+    protected $fillable = ['product_id', 'user_id', 'product_price', 'product_quantity', 'status', 'payment_method'];
 
     // Generate slug automatically
     protected static function boot()
@@ -22,5 +22,9 @@ class Order extends Model
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }

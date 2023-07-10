@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
@@ -23,16 +25,23 @@ Route::get('/Results', function () {
     return view("results");
 });
 // Route::get('/{view}', [ProductController::class, 'index']);
-Route::get('/Product/{id}', [ProductController::class, 'show']);
 Route::get('/Login', function () {
     return view("login");
 });
 Route::get('/Signup', function () {
     return view("signup");
 });
-Route::get('/CartPage', function () {
-    return view("cartPage");
-});
+
+Route::get('/products', [ProductController::class, 'index']); //show all product
+Route::get('/Product/{id}', [ProductController::class, 'show']); //show one prodct details
+
+Route::post('/cart', [CartController::class, 'addCart']); //add product to cart
+Route::post('/CartPage', [CartController::class, 'show']); //view cart with user id {post}
+
+Route::get('Product/checkout/{id}', [OrderController::class, 'checkout']); //show one prodct checkout
+Route::post('neworder', [OrderController::class, 'create']); 
+
+
 Route::get('/customerProfile', function () {
     return view("customerProfile");
 });
@@ -42,10 +51,9 @@ Route::get('/SellerLogin', function () {
 Route::get('/SellerSignup', function () {
     return view("sellerSignup");
 });
-Route::get('/SellerHome', function () {
-    return view("sellerHome");
-});
-Route::post('/products', [ProductController::class, 'addProduct']);
-Route::get('/products', [ProductController::class, 'index']);
 
-require __DIR__.'/auth.php';
+Route::post('/SellerHome', [OrderController::class, 'showOrders']);
+
+Route::post('/products', [ProductController::class, 'addProduct']);
+
+require __DIR__ . '/auth.php';

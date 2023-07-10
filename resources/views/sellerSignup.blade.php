@@ -4,7 +4,6 @@
     <input type="text" placeholder="Full Name" id="fullname" />
     <input type="email" placeholder="Email Address" id="email" />
     <input type="password" placeholder="Password" id="password" />
-    <input type="text" placeholder="IC/Passport No." id="IdentityNo" />
     <input type="text" placeholder="Shop Name" id="SopName" />
     <input type="text" placeholder="Shop Address" id="address" />
 

@@ -42,36 +42,26 @@ class ProductController extends Controller
 
     public function addProduct(Request $request)
     {
+        
+        
         $product = new Product();
 
         $product->name = $request->name;
-
-        $productImage = $request->images;
-
-        // $productImage->move('new/location', $productImage->getClientOriginalName());
-
-        // $path = $productImage->storeAs('images/products', $productImage->getClientOriginalName(), 'public');
-        // $path = Storage::path($request->images);
-
-        // $temp = '/images/products/'.$request->images;
-        // Storage::copy($path, $temp);
-        // if (! Storage::copy($path, $temp)){
-        //     return 'Error';
-        // }
-        // $data =[
-        //     'current path' => $path,
-        //     'modified path' => $temp,
-        // ];
-        // $imagePath = $request->images->storeAs('/images/products/');
-        // $product->image = Storage::url($imagePath);
-        // $product->image = $request->images;
-
+        //dd($request->hasFile('images'));
+        if ($request->hasFile('images')) {
+            $productImage = $request->file('images');
+            $imagePath = $productImage->store('/images/products/' , 'public');
+            $product->image = $imagePath;
+            // return $product;
+        }else{
+            return 'No Image';
+        }
 
         $product->price = $request->price;
         $product->description = $request->description;
         $product->shop_id = "1";
-        // $product->save();
-        return $productImage;
+        $product->save();
+        return $product;
     }
     // Get all products with variants and attributes
     public function index()

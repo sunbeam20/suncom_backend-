@@ -14,27 +14,27 @@
         </tr>
       </thead>
       <tbody>
-        @foreach ($products as $product)
-        <tr>
-          <td>
-            <input type="checkbox" class="cart-checkbox" />
-          </td>
-          <td class="img">
-            <div class="image-container">
-              <img src="{{ asset($product['image']) }}" alt="{{ $product['name'] }}" class="hover-effect" />
-              <span class="item-name hover-effect">{{ $product['name'] }}</span>
-            </div>
-          </td>
-          <td>{{ $product['price'] }}</td>
-          <td>
-            <div class="counter-container">
-              <button class="counter-button">-</button>
-              <span class="counter-quantity">0</span>
-              <button class="counter-button">+</button>
-            </div>
-          </td>
-          <td>Total Price here</td>
-        </tr>
+        @foreach ($carts as $product)
+          <tr>
+            <td>
+              <input type="checkbox" class="cart-checkbox" />
+            </td>
+            <td class="img">
+              <div class="image-container">
+                <img src="{{ asset($product->product->image) }}" alt="{{ $product->product->name }}" class="hover-effect" />
+                <span class="item-name hover-effect">{{ $product->product->name }}</span>
+              </div>
+            </td>
+            <td id="perPrice-{{ $product['id'] }}">{{ $product['product_price'] }}</td>
+            <td>
+              <div class="counter-container">
+                <button class="counter-button decrement" data-id="{{ $product['id'] }}">-</button>
+                <span class="counter-quantity" id="counter-{{ $product['id'] }}">{{ $product['product_quantity'] }}</span>
+                <button class="counter-button increment" data-id="{{ $product['id'] }}">+</button>
+              </div>
+            </td>
+            <td class="total-price" id="price-{{ $product['id'] }}"> {{ $product['product_price'] }}</td>
+          </tr>
         @endforeach
       </tbody>
     </table>
@@ -171,3 +171,73 @@
     background-color: bisque;
   }
 </style>
+
+<script>
+  // counter buton & totalk price js 
+  // Add click event listeners to all decrement buttons
+  const decrementButtons = document.querySelectorAll('.decrement');
+
+  decrementButtons.forEach(button => {
+    button.addEventListener('click', () => {
+
+      const productId = button.dataset.id; //data-id 
+      const counterElement = document.getElementById(`counter-${productId}`); //html text of quantity
+      const currentValue = parseInt(counterElement.textContent); //convert quantity to integer
+      const priceElement = document.getElementById(`price-${productId}`); // html text of product total price
+      const perPriceElement = document.getElementById(`perPrice-${productId}`); // html text of one pieces price
+      const priceValue = parseFloat(perPriceElement.textContent); // convert one pieces price to float 
+
+      if (currentValue > 1) {
+        priceElement.textContent = 0;
+        counterElement.textContent = currentValue - 1; //decrement the quantity
+        const updatedValue = parseInt(counterElement.textContent); // get updated quantity
+        priceElement.textContent = (priceValue * updatedValue).toFixed(2); //update the price with new quantity
+      }
+    });
+  });
+
+  // Add click event listeners to all increment buttons
+  const incrementButtons = document.querySelectorAll('.increment');
+
+  incrementButtons.forEach(button => {
+    button.addEventListener('click', () => {
+
+      const productId = button.dataset.id;
+      const counterElement = document.getElementById(`counter-${productId}`);
+      const currentValue = parseInt(counterElement.textContent);
+      const priceElement = document.getElementById(`price-${productId}`);
+      const perPriceElement = document.getElementById(`perPrice-${productId}`);
+      const priceValue = parseFloat(perPriceElement.textContent);
+
+      priceElement.textContent = 0;
+      counterElement.textContent = currentValue + 1;
+      const updatedValue = parseInt(counterElement.textContent);
+      priceElement.textContent = (priceValue * updatedValue).toFixed(2);
+    });
+  });
+
+  // Checkbox js from here
+  // Get references to the checkbox elements
+  const allCheckbox = document.querySelector('.all-checkbox');
+  const tbodyCheckboxes = document.querySelectorAll('.cart-checkbox:not(.all-checkbox)');
+
+  // Add event listener to the "All" checkbox
+  allCheckbox.addEventListener('change', function() {
+    const isChecked = this.checked;
+
+    // Update the state of all tbody checkboxes
+    tbodyCheckboxes.forEach(checkbox => {
+      checkbox.checked = isChecked;
+    });
+  });
+
+  // Add event listener to the tbody checkboxes
+  tbodyCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const isAnyUnchecked = [...tbodyCheckboxes].some(checkbox => !checkbox.checked);
+
+      // Update the state of the "All" checkbox
+      allCheckbox.checked = !isAnyUnchecked;
+    });
+  });
+</script>

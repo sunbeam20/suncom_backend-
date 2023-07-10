@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
 
         $user->save();
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect('home');
+            return redirect('/');
         }
         return back();
         

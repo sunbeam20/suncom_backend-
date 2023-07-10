@@ -1,15 +1,16 @@
 @include('components.sellerHeader')
 <div class="login-form">
     <h1>Seller Login</h1>
-    <form>
+    <form action="/seller" method="POST">
+        @csrf
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" v-model="email" required />
+            <input type="email" id="email" name="email" />
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" v-model="password" required />
-            <button class="LoginBtn">Login</button>
+            <input type="password" id="password" name="password" />
+            <button type="submit" class="LoginBtn">Login</button>
         </div>
 
         <p class="create-account">

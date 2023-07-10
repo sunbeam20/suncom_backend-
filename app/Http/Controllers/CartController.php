@@ -10,15 +10,33 @@ class CartController extends Controller
     {
         // Logic to fetch and display a list of carts
         $carts = Cart::all();
-
+        return  $carts;
         // Additional logic or view
     }
-
-    public function show($id)
+    public function addCart(Request $request)
     {
-        // Logic to fetch and display a single cart based on the provided $id
-        $cart = Cart::findOrFail($id);
+        if(auth()->guest()){
+            return redirect()->back()->with('message', 'Please log in to add the product to your cart.');
+        }
+        $cart = new Cart();
+        $productData = $request->input('product');
+        $product = json_decode($productData, true);
 
+        $cart->user_id = $request->user_id;
+        $cart->product_id = $product['id'];
+        $cart->product_price = $product['price'];
+        $cart->product_quantity = 1;
+        $cart->save();
+        return back();
+    }
+    public function show(Request $request)
+    {
+        $userid = $request->user_id;
+        // Logic to fetch and display a single cart based on the provided $id
+        $carts = Cart::with('product')->where('user_id', $userid)->get();
+
+        //return $carts;
+        return view('CartPage', ['carts' => $carts]);
         // Additional logic or view
     }
 

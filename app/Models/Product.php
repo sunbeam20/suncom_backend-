@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'slug', 'description', 'price', 'image', 'shop_id'];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'images', 'shop_id'];
 
     // Generate slug automatically
     protected static function boot()
