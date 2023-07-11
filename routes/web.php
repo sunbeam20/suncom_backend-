@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Category;
 use App\Models\Product;
@@ -21,6 +22,7 @@ use App\Models\Product;
 Route::get('/', function () {
     return view("home");
 });
+Route::post('/webhook', [WebhookController::class, 'handle']);
 Route::get('/Results', function () {
     return view("results");
 });
