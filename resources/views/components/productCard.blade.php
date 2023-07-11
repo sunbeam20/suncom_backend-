@@ -46,6 +46,8 @@
 
   .product-image:hover {
     cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
   }
 
   .product-image {
@@ -98,6 +100,10 @@
   .add-to-cart img {
     width: 2em;
     height: auto;
+  }
+  .add-to-cart:hover{
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
   }
 
   .add-to-cart {

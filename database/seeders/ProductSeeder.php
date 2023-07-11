@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
 
         // Insert clothing products data
         $clothingProducts = [
-            ['name' => 'T-Shirt', 'description' => 'Comfortable cotton t-shirt', 'price' => 19.99, 'image' => 'tshirt.png', 'shop_id' => $shop2->id, 'category_id' => 2],
+            ['name' => 'T-Shirt', 'description' => 'Comfortable cotton t-shirt', 'price' => 19.99,'image' => 'tshirt.png', 'shop_id' => $shop2->id, 'category_id' => 2],
             ['name' => 'Jeans', 'description' => 'Stylish blue jeans', 'price' => 49.99, 'image' => 'jeans.png', 'shop_id' => $shop2->id, 'category_id' => 2],
             ['name' => 'Jacket', 'description' => 'Warm winter jacket', 'price' => 99.99, 'image' => 'jacket.png', 'shop_id' => $shop2->id, 'category_id' => 2],
             ['name' => 'Cap', 'description' => 'Cool baseball cap', 'price' => 14.99, 'image' => 'cap.png', 'shop_id' => $shop2->id, 'category_id' => 2],
@@ -70,6 +70,7 @@ class ProductSeeder extends Seeder
         $products = array_merge($clothingProducts, $shoeProducts);
 
         foreach ($products as $product) {
+            //$product['image'] = '/images/products/' . implode(',', $product['image']);
 
             $product['image'] = '/images/products/' . $product['image'];
             Product::create($product);

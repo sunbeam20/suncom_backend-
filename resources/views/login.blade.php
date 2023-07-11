@@ -56,13 +56,12 @@
     .input,
     .LoginBtn {
         display: block;
-        text-align: center;
         width: 100%;
         /* Adjust the width as needed */
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1em;
-        padding: 0.5em 0em;
+        padding: 0.5em ;
     }
 
     .LoginBtn {

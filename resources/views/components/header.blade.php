@@ -2,14 +2,7 @@
   <nav>
     <div class="navleft">
       <a href="/"><img src="{{ asset('images/logo.png') }}" alt=""></a>
-      <div class="dropdown">
-        <button>Categories</button>
-        <div class="dropdown-menu">
-          @foreach ($categories as $category)
-            <a class="dropdown-item" href={{ 'Results/' . $category['id'] }}>{{ $category->name }}</a>
-          @endforeach
-        </div>
-      </div>
+
     </div>
     <div class="navcenter">
       <div>
@@ -47,9 +40,15 @@
         </div>
       @endif
       <div class="dropdown">
+        @if (Auth::check())
+        <button class="dropdown-toggle">
+          <img src="{{ asset('images/man.png') }}" alt="image" class="hover-effect" />
+        </button>
+        @else
         <button class="dropdown-toggle">
           <img src="{{ asset('images/user.png') }}" alt="image" class="hover-effect" />
         </button>
+        @endif
         <div class="dropdown-menu">
           @if (Auth::check())
             <a href="customerProfile">
@@ -98,7 +97,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 10em;
+    padding-left: 5em;
   }
 
   .navright {
@@ -128,10 +127,6 @@
     color: white;
     border: none;
     cursor: pointer;
-  }
-
-  button:hover {
-    text-decoration: underline;
   }
 
   button {
@@ -282,6 +277,7 @@
     background-color: #f2f2f2;
     border-radius: 10px;
     margin-block-end: 0em;
+    padding: 0em 1em;
   }
 
   .search-input {
@@ -289,6 +285,7 @@
     background-color: transparent;
     font-size: 1em;
     flex: 1;
+
   }
 
   .search-input:focus {

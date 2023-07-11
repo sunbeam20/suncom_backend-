@@ -1,163 +1,149 @@
 @include('components.header')
 <form class="login-form" action="/register" method="POST">
-    @csrf
-    <h1>Sign Up</h1>
+  @csrf
+  <h1>Sign Up</h1>
+  <div class="details">
     <input class="input" type="text" placeholder="Full Name" id="fullname" name="name" />
     <input class="input" type="email" placeholder="Email Address" id="email" name="email" />
-
     <input class="input" type="password" placeholder="Password" id="password" name="password" />
-
     <input class="input" type="text" placeholder="Address" id="address" name="address" />
+  </div>
 
-    <div class="side-side">
-        <div class="input-group">
-            <input class="input" type="text" placeholder="City" id="city" name="city" />
-            <input class="input" type="text" placeholder="State" id="state" name="state" />
-        </div>
-        <div class="input-group">
-            <input class="input" type="text" placeholder="ZIP-code" id="zip" name="zip" />
-            <input class="input" type="tel" placeholder="Contact Number" id="contact" name="contact" />
-        </div>
-    </div>
+  <div class="side-side">
+    <div class="input-group">
+      <select class="input" id="state" name="state">
+        <option value="" selected disabled>State</option>
+        <option value="state1">State 1</option>
+        <option value="state2">State 2</option>
+        <option value="state3">State 3</option>
+        <!-- Add more state options as needed -->
+      </select>
 
-    <div class="radio-buttons">
-        <label class="label">Gender:</label>
-        <label>
-            <input class="input" type="radio" name="gender" value="male" name="male" />
-            Male
-        </label>
-        <label class="label">
-            <input class="input" type="radio" name="gender" value="female" name="female" />
-            Female
-        </label>
+      <select class="input" id="city" name="city">
+        <option value="" selected disabled>City</option>
+        <option value="city1">City 1</option>
+        <option value="city2">City 2</option>
+        <option value="city3">City 3</option>
+        <!-- Add more city options as needed -->
+      </select>
+
     </div>
-    <!-- <SignupBtn /> -->
-    <div><button type="submit" class="signupBtn">Signup</button></div>
-    <p class="Log-in">
-        Already have an account?<a href="/Login">Log in</a>
-    </p>
+    <div class="input-group">
+      <input class="input" type="text" placeholder="ZIP-code" id="zip" name="zip" />
+      <input class="input" type="tel" placeholder="Contact Number" id="contact" name="contact" />
+    </div>
+  </div>
+
+  <div class="radio-buttons">
+    <label class="label">Gender:</label>
+    <label class="label">
+      <input class="input" type="radio" name="gender" value="male" name="male" />
+      Male
+    </label>
+    <label class="label">
+      <input class="input" type="radio" name="gender" value="female" name="female" />
+      Female
+    </label>
+  </div>
+  <!-- <SignupBtn /> -->
+  <div><button type="submit" class="signupBtn">Signup</button></div>
+  <p class="Log-in">
+    Already have an account?<a href="/Login">Log in</a>
+  </p>
 </form>
 @include('components.footer')
 
 <style>
-    body {
-        margin: 0px;
-    }
+  body {
+    margin: 0px;
+  }
 
-    .login-form {
-        text-align: center;
-        max-width: 25%;
-        margin: 4em auto;
-        padding: 1em 2em 2em 2em;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    }
+  .login-form {
+    text-align: center;
+    max-width: 20%;
+    margin: 4em auto;
+    padding: 1em 2em 2em 2em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
 
-    h1 {
-        text-align: center;
-        margin-bottom: 1.5em;
-    }
+  .details {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+  }
 
-    .label {
-        display: block;
-        margin-bottom: 0.5em;
-        font-weight: bold;
-    }
+  .details .input {
+    width: 95%;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid gray;
+  }
 
-    .input {
-        border: 1px solid #ccc;
-        margin: 1em 1em 0em 1em;
-    }
+  .side-side {
+    width: 100%;
+  }
 
-    .input,
-    .input-group {
-        display: block;
-        margin: 0em 1em 0em 1em auto;
-        width: 90%;
-        padding: 5px;
-        border-radius: 5px;
-    }
+  .side-side .input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .input-group .input{
+    width: 40%;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-radius: 5px;
+    border: 1px solid gray;
+  }
 
-    .input:focus {
-        outline: none;
-        border-color: dodgerblue;
-    }
+  .radio-buttons {
+    display: flex;
+    flex-direction: row;
+    padding: 1em;
+    justify-content: center;
+    color: gray;
+  }
 
-    .side-side {
-        display: flex;
-        justify-content: center;
-    }
+  .radio-buttons label {
+    display: flex;
+    align-items: center;
+  }
 
-    .input-group {
-        width: 45%;
-    }
+  .radio-buttons input[type="radio"] {
+    margin: 0em 1em;
+  }
 
-    .input-group input {
-        width: 90%;
-        box-sizing: border-box;
-    }
+  .Log-in {
+    text-align: center;
+  }
 
-    .radio-buttons {
-        display: flex;
-        flex-direction: row;
-        padding: 1em;
-        justify-content: center;
-        color: gray;
-    }
+  .Log-in a {
+    text-decoration: none;
+  }
 
-    .radio-buttons label {
-        display: flex;
-        align-items: center;
-    }
+  .Log-in a:hover {
+    text-decoration: underline;
+  }
 
-    .radio-buttons input[type="radio"] {
-        margin: 0em 1em;
-    }
-
-    .Log-in {
-        text-align: center;
-    }
-
-    .Log-in a {
-        text-decoration: none;
-    }
-
-    .Log-in a:hover {
-        text-decoration: underline;
-    }
-
-    .input[type="text"],
-    .input[type="email"],
-    .input[type="password"],
-    .input[type="tel"] {
-        width: 90%;
-        padding: 0.5em;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-
-    .signupBtn {
-        background-color: #614700ef;
-        border: none;
-        color: white;
-        padding: 1em 0em;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 1em;
-        cursor: pointer;
-        border-radius: 5px;
-        width: 90%;
-    }
-
-    div {
-        text-align: center;
-    }
-
-    button:focus {
-        outline: none;
-        box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
-    }
+  .signupBtn {
+    background-color: #614700ef;
+    border: none;
+    color: white;
+    padding: 1em 0em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 95%;
+  }
 </style>

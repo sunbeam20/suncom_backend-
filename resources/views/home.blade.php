@@ -1,9 +1,11 @@
 @include('components.header')
-@if (Auth::guard('web')->check())
+{{-- @if (Auth::guard('web')->check())
   <h1>Logged in as {{ Auth::guard('web')->user()->name }}</h1>
 @else
   <h1>Guest</h1>
-@endif
+@endif --}}
+
+@include('components.categoriesCard')
 
 <div class="product-list">
   <h1 class="h1">Top Products</h1>
@@ -18,9 +20,9 @@
   <h1 class="h1">Recommended For You</h1>
   @include('components.productCard')
   <div class="view-more">
-    <router-link to="/Results" exact class="link">
-      <h2 class="h2">View More <img src="../assets/more.png" /></h2>
-    </router-link>
+    <a href="/Results">
+      <h2 class="h2">View More <img src="{{ asset('images/more.png') }}" /></h2>
+    </a>
   </div>
 </div>
 
@@ -32,6 +34,11 @@
 @include('components.footer')
 
 <style>
+
+  a{
+    text-decoration: none;
+    color: black;
+  }
   body {
     margin: 0px;
   }
@@ -67,9 +74,10 @@
     /* start product from left*/
     align-items: center;
     gap: 1em;
-    margin: 2em 10em 2em 10em;
-    padding: 2em 1em 2em 1em;
+    margin: 2em 3em;
+    padding: 2em 1em;
     flex-direction: row;
+    border-radius: 5px;
     background-color: rgb(235, 235, 235);
   }
 

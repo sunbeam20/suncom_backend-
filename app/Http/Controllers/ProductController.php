@@ -75,8 +75,11 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::with('variants.attributes')->findOrFail($id);
+        $categoryId = $product['category_id'];
+        $relatedProducts = Product::where('category_id', $categoryId)->limit(10)->get();
 
-        return view('product', ['product' => $product]);
+        //return $relatedProducts;
+        return view('product', ['product' => $product, 'relatedProducts' => $relatedProducts]);
     }
 
     public function update(Request $request, $id)

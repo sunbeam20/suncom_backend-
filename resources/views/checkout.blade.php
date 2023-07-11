@@ -3,70 +3,122 @@
 <form class="form" action="/neworder" method="POST">
   @csrf
   <div class="checkout-page">
-    <div>
+    <div style="width: 60%">
       <div class="shipping-address">
         <h2>Shipping Address</h2>
+        <div class="address">
+          <h3>{{ Auth::user()->name }}</h3>
+          <p><img src="{{ asset('images/location.png') }}" alt="">{{ Auth::user()->address }},
+            {{ Auth::user()->city }}, {{ Auth::user()->state }}, {{ Auth::user()->zip }}
+          </p>
+          <button id="change" type="button">Change</button>
+        </div>
         @auth
           <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
         @endauth
-        <input type="text" name="full_name" placeholder="Full Name" class="field" />
-        <input type="text" name="address" placeholder="Address" class="field" />
-        <input type="text" name="city" placeholder="City" class="field" />
-        <input type="text" name="state" placeholder="State" class="field" />
-        <input type="text" name="postal_code" placeholder="Postal/Zip-code" class="field" />
+        <div class="edit-address">
+          <div class="edit-contents">
+            <label for="">Name</label>
+            <input type="text" name="full_name" placeholder="Full Name" class="field"
+              value="{{ Auth::user()->name }}" />
+          </div>
+          <div class="edit-contents">
+            <label for="">Address</label>
+            <input type="text" name="address" placeholder="Address" class="field"
+              value="{{ Auth::user()->address }}" />
+          </div>
+          <div class="edit-contents">
+            <label for="">City</label>
+            <input type="text" name="city" placeholder="City" class="field" value="{{ Auth::user()->city }}" />
+          </div>
+          <div class="edit-contents">
+            <label for="">State</label>
+            <input type="text" name="state" placeholder="State" class="field"
+              value="{{ Auth::user()->state }}" />
+          </div>
+          <div class="edit-contents"> <label for="">Zip-code</label>
+            <input type="text" name="postal_code" placeholder="Postal/Zip-code" class="field"
+              value="{{ Auth::user()->zip }}" />
+          </div>
+        </div>
+
       </div>
       <div class="product-list">
         <h2>Product List</h2>
         <!-- Display your product list here -->
         <!-- Example: -->
-        <ul>
-          <li>{{ $product->name }}</li>
-        </ul>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Quantity</th>
+            <th>Price</th>
+          </tr>
+          <tr>
+            <td>{{ $product->name }}</td>
+            <td><img src="{{ asset($product['image']) }}" alt=""></td>
+            <td><label for="">1</label></td>
+            <td><label for="">{{ $product->price }}</label></td>
+          </tr>
+        </table>
         <input type="hidden" name="product_id" value="{{ $product->id }}">
         <input type="hidden" name="product_price" value="{{ $product->price }}">
-        <input type="text" class="quantity-label"  name="product_quantity" value="1" readonly>
       </div>
     </div>
 
     <div class="checkout-summary">
+
       <div class="payment-method">
         <h2>Payment Method</h2>
-        <!-- Display your payment method options here -->
-        <!-- Example: -->
+        <div class="flex">
+          <div class="pm">
+              <input type="radio" name="payment" id="">
+              <img class="img" src="{{ asset('images/cash-on-delivery.png') }}" />
+          </div>
+          <div class="pm">
+              <input type="radio" name="payment" id="">
+              <img class="img" src="{{ asset('images/visa.png') }}" />
+          </div>
+          <div class="pm">
+              <input type="radio" name="payment" id="">
+              <img class="img" src="{{ asset('images/paypal.png') }}" />
+          </div>
+        </div>
 
-        <button type="button" name="payment_method" value="cod" class="payment-btn" data-selected="false">
-          <img class="img" src="{{ asset('images/cash-on-delivery.png') }}" />
-        </button>
-        <button type="button" name="payment_method" value="bank" class="payment-btn" data-selected="false">
-          <img class="img" src="{{ asset('images/visa.png') }}" />
-        </button>
-        <button type="button" name="payment_method" value="paypal" class="payment-btn" data-selected="false">
-          <img class="img" src="{{ asset('images/paypal.png') }}" />
-        </button>
-        <button type="button" name="payment_method" value="gpay" class="payment-btn" data-selected="false">
-          <img class="img" src="{{ asset('images/google-pay.png') }}" />
-        </button>
-        <button type="button" name="payment_method" value="apay" class="payment-btn" data-selected="false">
-          <img class="img" src="{{ asset('images/apple-pay.png') }}" />
-        </button>
         <input type="hidden" name="payment_method" id="payment_method_input" value="" />
       </div>
 
-      <h2>Order Summary</h2>
-      <div class="item-cost">
-        <span>Item Cost: Rm</span>
-        <span>{{ $product->price }}</span>
-      </div>
-      <div class="shipping-cost">
-        <span>Shipping Cost: Rm</span>
-        <span>9.99</span>
-      </div>
-      <hr />
-      <div class="total-cost">
-        <span>Total Cost: Rm</span>
-        <span>{{ $product->price }}</span>
+      <div class="collection-method">
+        <h2>Order Collection Method</h2>
+        <div class="flex">
+          <div class="cm">
+            <input type="radio" name="collection" id="">
+            <img class="img" src="{{ asset('images/delivery.png') }}" />
+          </div>
+          <div class="cm">
+            <input type="radio" name="collection" id="">
+            <img class="img" src="{{ asset('images/pickup.png') }}" />
+          </div>
+        </div>
+
       </div>
 
+      <div class="order-smmary">
+        <h2>Order Summary</h2>
+        <div class="item-cost">
+          <span>Item Cost: Rm</span>
+          <span>{{ $product->price }}</span>
+        </div>
+        <div class="shipping-cost">
+          <span>Shipping Cost: Rm</span>
+          <span>4.99</span>
+        </div>
+        <hr />
+        <div class="total-cost">
+          <span>Total Cost: Rm</span>
+          <span id="result"></span>
+        </div>
+      </div>
       <button class="place-order-button" type="submit">Place Order</button>
     </div>
   </div>
@@ -74,13 +126,34 @@
 @include('components.footer')
 
 <style>
+  .flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  .pm, .cm{
+    display: flex;
+  }
+
+  table,
+  tbody {
+    width: 100%;
+  }
+
+  th,
+  td {
+    width: 25%;
+    text-align: left;
+  }
+
   body {
     margin: 0px;
   }
 
   .img {
     width: 4em;
-    height: 3em;
+    height: auto;
+    border-radius: 5px;
   }
 
   .payemt-btn {
@@ -102,20 +175,81 @@
   .checkout-page {
     display: flex;
     justify-content: space-between;
+    padding: 1em;
+  }
+
+  .address {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+
+  .address img {
+    width: 1em;
+    height: auto;
+    margin-right: 5px;
+  }
+
+  #change {
+    color: rgb(68, 52, 216);
+    font-size: small;
+  }
+
+  .edit-address {
+    display: none;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    align-content: flex-start;
+    width: 100%;
+  }
+
+  .edit-address .edit-contents {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .edit-contents label {
+    width: 15%;
+    text-align: right;
+    color: gray;
+  }
+
+  .edit-contents input {
+    margin-left: 1em;
+    display: inline-block;
+    width: 65%;
+    border: 1px solid gray;
+    border-radius: 5px;
   }
 
   .product-list,
   .checkout-summary {
     flex-basis: 45%;
   }
+
+  ul li {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
   .quantity-label {
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #333;
-}
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+  }
 
   .place-order-button {
     display: block;
@@ -143,7 +277,7 @@
   }
 
   .shipping-address {
-    width: 20em;
+    width: 30em;
     display: flex;
     flex-direction: column;
   }
@@ -173,4 +307,18 @@
       $('#payment_method_input').val(selectedPaymentMethod);
     });
   });
+
+  // Address change
+  const changeButton = document.getElementById('change');
+  const editAddressDiv = document.querySelector('.edit-address');
+
+  changeButton.addEventListener('click', () => {
+    editAddressDiv.style.display = editAddressDiv.style.display === 'none' ? 'flex' : 'none';
+  });
+
+  // Total price
+  var productPrice = {!! $product->price !!};
+  var sum = productPrice + 4.99;
+  document.getElementById('result').textContent = sum.toFixed(2);
+
 </script>

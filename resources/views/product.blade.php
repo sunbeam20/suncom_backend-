@@ -9,79 +9,124 @@
     <div class="item5"><img src="{{ asset($product['image']) }}" /></div>
   </div>
   <div class="side-grid">
-    <h1 class="sgspace">{{ $product['name'] }}</h1>
-    <p class="sgspace">4.8k Sold</p>
-    <p class="sgspace">Price {{ $product['price'] }}</p>
-    <p class="sgspace">Color</p>
-    <p class="sgspace">Size</p>
-    <p class="sgspace">Quantity
-    <div class="counter-container">
-      <button class="counter-button">-</button>
-      <span class="counter-quantity">0</span>
-      <button class="counter-button">+</button>
+    <div class="sgspace">
+      <h2 class="sgsTitle">Product Name</h2>
+      <h1 class="sgsTxt">{{ $product['name'] }}</h1>
     </div>
-    </p>
-    <form class="product-form" action="/cart" method="POST">
-      @csrf
-      @auth
-        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-      @endauth
-      <input type="hidden" name="product" value="{{ json_encode($product) }}">
-      <button class="add-to-cart" type="submit">Add to Cart</button>
-    </form>
-    <a href={{ 'checkout/' . $product['id'] }} class="buy-now">Buy Now</a>
+    <div class="sgspace">
+      <h2 class="sgsTitle">Price (Rm)</h2>
+      <h2 class="sgsTxt">{{ $product['price'] }}</h2>
+    </div>
+    <div class="sgspace">
+      <h2 class="sgsTitle">Sold</h2>
+      <h2 class="sgsTxt">20</h2>
+    </div>
+    <div class="sgspace">
+      <h2 class="sgsTitle">Available</h2>
+      <h2 class="sgsTxt">17 pieces</h2>
+    </div>
+    <div class="sgspace">
+      <h2 class="sgsTitle">Quantity</h2>
+      <div class="counter-container sgsTxt">
+        <button class="counter-button">-</button>
+        <span class="counter-quantity">1</span>
+        <button class="counter-button">+</button>
+      </div>
+    </div>
+    <div class="actionbtn">
+      <form class="product-form" action="/cart" method="POST">
+        @csrf
+        @auth
+          <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+        @endauth
+        <input type="hidden" name="product" value="{{ json_encode($product) }}">
+        <button class="add-to-cart" type="submit">Add to Cart</button>
+      </form>
+      <a href={{ 'checkout/' . $product['id'] }} class="buy-now">Buy Now</a>
+    </div>
+
   </div>
   <div class="product-description">
     <h2>Product Description</h2>
     <pre>
-      Welcome To Our Store
+      Product Features:
 
-      1,What our aiming at? 
-      ★ Perfect product: popular & practical & inexpensive.
-      ★ Fast delivery: ready stock & Quick Shipping
-      2,Better consumer protection 
-      ★ Full refund if you don't receive your order.
-      ★ Full or partial refund , if the item is not as described.
+      - Upper: Vegan Leather
       
-      Product description:
+      - Insole: Vegan Leather
       
-      Simple to wear plus cartoon elements, comfortable socks design
-      One pair of socks can be worn in two styles, comfortable socks toe
-      Comfortable sock heel, soft and skin-friendly, more wearable, more durable
-      Rich in elasticity
+      - Outsole: TPR
+
       
-      Specifications:
-      Material: polyester fiber
-      Size: 8*21cm
-      Style: casual
-      Color: beige cartoon
-      Function: breathable, invisible, antibacterial
+      Product Measurements:
+
+      - Platform Height : 1''
+
       
-      Package contains: 1 pair* Random Style socks
+      EU Size (MY x UK x US x Length(cm))
+      
+      - 35 (MY:4.0 x UK:2.0 x US:4.0 x 22.5cm)
+      
+      - 36 (MY:5.0 x UK:3.0 x US:5.0 x 23.0cm)
+      
+      - 37 (MY:6.0 x UK:4.0 x US:6.0 x 23.6cm)
+      
+      - 38 (MY:7.0 x UK:5.0 x US:7.0 x 24.2cm)
+      
+      - 39 (MY:8.0 x UK:6.0 x US:8.0 x 24.8cm)
+      
+      - 40 (MY:9.0 x UK:7.0 x US:9.0 x 25.4cm)
+      
+      - 41 (MY:10.0 x UK:8.0 x US:10.0 x 26.0cm)
+      
+      - 42 (MY:11.0 x UK:9.0 x US:11.0 x 26.6cm)
+      
+      
+      
+      NO EXCHANGES ALLOWED
+      
+      *Kindly be informed that we are not able to proceed with any size exchanges directly. If you wish to exchange an item, 
+      kindly return and request refund for the current pair of shoes and place a new order for the correct size. 
     </pre>
   </div>
-  <div class="product-rating">
-    <h2>Product Rating</h2>
-    <div class="star">
-      <div>
-        <span class="rating"> 4.9 </span>
-        <span> out of 5 </span>
-        <button class="btn">All</button>
-        <button class="btn">5 Star</button>
-        <button class="btn">4 Star</button>
-        <button class="btn">3 Star</button>
-        <button class="btn">2 Star</button>
-        <button class="btn">1 Star</button>
+  {{-- Rlated Products --}}
+  <div class="related-contents">
+    <h2>Related Products</h2>
+    @foreach ($relatedProducts as $related)
+      <div class="related">
+        <div class="product-card">
+          {{-- <router-link :to="{ name: 'Product', params: { id: product.id } }"> --}}
+          <a href={{ 'Product/' . $related['id'] }}>
+            <div class="product-image">
+              <img src="{{ asset($related['image']) }}" title="View" class="hover-effect" />
+            </div>
+          </a>
+          <div class="product-details">
+            <div class="product-name">
+              {{ $related['name'] }}
+            </div>
+            <div class="product-price">
+              <p id="sold">1k Sold</p>
+              <p>RM {{ $related['price'] }}</p>
+              <form action="/cart" method="POST" class="radd-to-cart">
+                @csrf
+                @auth
+                  <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                @endauth
+                <input type="hidden" name="product" value="{{ json_encode($related) }}">
+                <button type="submit" {{-- @guest disabled @endguest --}}>
+                  <img src="{{ asset('images/add-to-cart.png') }}" class="hover-effect" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="star-img">
-        <img src="../assets/star.png" />
-        <img src="../assets/star.png" />
-        <img src="../assets/star.png" />
-        <img src="../assets/star.png" />
-        <img src="../assets/star.png" />
-      </div>
-    </div>
+    @endforeach
   </div>
+
+  {{--  --}}
+
 </div>
 @include('components.footer')
 
@@ -94,6 +139,7 @@
     display: block;
     margin-top: 0em;
     margin-block-end: 1em;
+    margin-right: 1em;
   }
 
   .hover-effect:hover {
@@ -107,8 +153,9 @@
     justify-content: left;
     /* start product from left*/
     gap: 1em;
-    margin: 2em 10em 2em 10em;
+    margin: 2em 5em;
     padding: 2em 0em 2em 2em;
+    border-radius: 5px;
     flex-direction: row;
     background-color: rgb(235, 235, 235);
   }
@@ -119,7 +166,7 @@
     grid-template-columns: auto auto auto auto;
     gap: 1em;
     background-color: #ffffff00;
-    width: 20%;
+    width: 25%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
   }
@@ -127,11 +174,25 @@
   .side-grid {
     height: 100%;
     width: 50%;
-    margin-left: 10em;
+    margin: 2em 5em;
   }
 
   .sgspace {
-    padding-bottom: 1em;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    flex-wrap: wrap;
+  }
+
+  .sgsTitle {
+    width: 40%;
+    text-align: right;
+    margin-right: 5em;
+    color: gray;
+  }
+
+  .sgsTxt {
+    text-align: left;
   }
 
   .grid-container>div {
@@ -200,17 +261,28 @@
     background-color: #ffffff;
     color: #000000;
     border: 0.05em solid black;
-    border-radius: 1em;
+    border-radius: 5px;
     padding: 0.75em 1em;
     cursor: pointer;
-    font-size: 0.75em;
+    font-size: 1em;
     font-weight: bold;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
   }
 
   .add-to-cart:hover,
   .buy-now:hover {
     background-color: #000000;
     color: #ffffff;
+  }
+
+  .actionbtn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 2em;
   }
 
   .product-description {
@@ -230,41 +302,105 @@
     font: inherit;
   }
 
-  .product-rating {
-    display: block;
-    flex-wrap: wrap;
-    justify-content: left;
-    width: 100%;
-    gap: 1em;
-    border-radius: 5px;
+  /* related products */
+  .related-contents {
     margin: 2em 4em 2em 4em;
-    padding: 2em 0em 2em 2em;
-    background-color: #f7f7f7;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: flex-start;
+    align-items: center;
   }
 
-  .star {
-    margin: 1em 2em 1em 1em;
-    padding: 2em 0em 2em 2em;
-    background-color: #f5f2e7;
-    border: 1px solid #f5eac0;
+  .related-contents h2 {
+    display: block;
+    width: 100%;
   }
 
-  .rating {
-    font-size: 2em;
+  .related {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0.5em;
   }
 
-  .btn {
+  .product-card {
+    width: 12em;
+    height: 20em;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+
+  .product-image:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+  }
+
+  .product-image {
+    width: 100%;
+    height: 70%;
+    object-fit: contain;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+  }
+
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 1em;
+    background-color: white;
+  }
+
+  .product-name {
     font-size: 1em;
-    margin: 1em;
-    padding: 0.5em 1em 0.5em 1em;
-    background-color: #ffffff;
-    border: 1px solid rgb(200, 198, 198);
-    color: rgb(54, 52, 52);
-    font: inherit;
+    margin-bottom: 0.7em;
   }
 
-  .star-img img {
-    width: 1em;
+  .product-price {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2em;
+    font-weight: normal;
+    color: #000000;
+  }
+
+  .product-price p {
+    margin: 0px;
+    margin-right: 0.3em;
+    text-align: center;
+    font-weight: bold;
+  }
+
+  #sold {
+    font-size: small;
+    color: #585858;
+  }
+
+  .radd-to-cart img {
+    width: 2em;
+    height: auto;
+  }
+
+  .radd-to-cart:hover {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+  }
+
+  .radd-to-cart {
+    background-color: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    font-size: 0.75em;
+    font-weight: bold;
   }
 </style>

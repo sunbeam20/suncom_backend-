@@ -1,7 +1,7 @@
 @include('components.header')
 <div class="cart">
   <h2>Your Cart</h2>
-  <div class="cart-empty">Your cart is empty</div>
+  {{-- <div class="cart-empty">Your cart is empty</div> --}}
   <div>
     <table class="cart-table">
       <thead class="tableHead">
@@ -39,7 +39,7 @@
       </tbody>
     </table>
     <div class="cart-total">
-      Total:
+      Total: 184.96
       <button class="checkoutbtn">Checkout</button>
     </div>
   </div>
@@ -168,7 +168,8 @@
   .checkoutbtn {
     margin-left: 1em;
     padding: 1em;
-    background-color: bisque;
+    border-radius: 5px;
+    background-color: #614700ef;
   }
 </style>
 
