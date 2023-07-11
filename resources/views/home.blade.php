@@ -26,8 +26,12 @@
 
 
 <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-<df-messenger intent="WELCOME" chat-title="ShopBot" agent-id="2bd1f06d-0bcd-47aa-b3f5-b97949110bdf" language-code="en">
-</df-messenger>
+<df-messenger
+  intent="WELCOME"
+  chat-title="Suncom"
+  agent-id="ea7c085e-3920-4d19-843f-0a5a20297517"
+  language-code="en"
+></df-messenger>
 
 @include('components.footer')
 
